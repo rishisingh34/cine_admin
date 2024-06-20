@@ -2,11 +2,11 @@ import Admin from '../models/admin.model';
 import { Request, Response } from 'express';
 import crypto from "crypto";
 import Question from '../models/question.model';
-import StudentModel from "../models/student.model";
 import ResponseModel from '../models/response.model';
 import Visited from '../models/visited.model';
 import Token from '../middleware/token.middleware';
 import {sendPassword} from "../utils/mailer";
+import StudentModel from '../models/student.model'
 
 const adminController = {
     login: async (req: Request, res: Response): Promise<Response> => {
@@ -55,6 +55,26 @@ const adminController = {
             return res.status(201).json({message:"Student registered successfully."});
         } catch (error) {
             return res.status(500).json({message:"Internal server error."});
+        }
+    },
+    addQuestion : async (req:Request,res:Response):Promise<Response>=>{
+        try {
+            const {quesId,question , options , subject, answer } = req.body;
+            
+            const newQuestion = new Question({
+                quesId,
+                subject,
+                question,
+                options,
+                answer
+              });
+        
+              await newQuestion.save();
+        
+              return res.status(201).json({ message: "Question added successfully" });
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({message:"Internal server error."});            
         }
     }
 }
