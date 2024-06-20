@@ -69,6 +69,19 @@ const adminController = {
         catch(error){
             return res.status(500).json({message:"internal server error"});
         }
+    },
+    deleteQuestion: async(req:Request,res:Response):Promise<Response>=>{
+        try {
+            const {questionId} = req.body;
+            const questionExists = await Question.findOneAndDelete({questionId});
+            if(!questionExists){
+                return res.status(400).json({message:"Question does not exist."});
+            }
+            return res.status(200).json({message:"Question deleted successfully."});
+        }
+        catch(error){
+            return res.status(500).json({message:"internal server error"});
+        }
     }
 }
 
