@@ -56,6 +56,19 @@ const adminController = {
         } catch (error) {
             return res.status(500).json({message:"Internal server error."});
         }
+    },
+    updateQuestion: async(req:Request,res:Response):Promise<Response>=>{
+        try {
+            const {questionnId,question,options,answer} = req.body;
+            const questionExists = await Question.findOneAndUpdate({quesId:questionnId},{question,options,answer});
+            if(!questionExists){
+                return res.status(400).json({message:"Question does not exist."});
+            }
+            return res.status(200).json({message:"Question updated successfully."});
+        }
+        catch(error){
+            return res.status(500).json({message:"internal server error"});
+        }
     }
 }
 
