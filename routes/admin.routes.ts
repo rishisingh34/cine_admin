@@ -9,5 +9,6 @@ router.post('/addStudent',auth, adminController.addStudent);
 router.post('/updateQuestion',auth, adminController.updateQuestion);
 router.post('/deleteQuestion',auth, adminController.deleteQuestion);
 router.post('/addQuestion',auth, adminController.addQuestion);
+router.get('/questions', adminController.questions ); 
 
 export default router;
