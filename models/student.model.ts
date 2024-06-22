@@ -10,7 +10,6 @@ interface IStudent extends Document {
     phone: string,
     password: string,
     isVerified: boolean,
-    feedback: Schema.Types.ObjectId | null 
 }
 
 const StudentSchema = new Schema<IStudent>({
@@ -23,7 +22,6 @@ const StudentSchema = new Schema<IStudent>({
     phone: { type: String, required: true },
     password: { type: String },
     isVerified: { type: Boolean, required: true, default: false },
-    feedback: { type: Schema.Types.ObjectId, ref: 'Feedback', default: null }
 });
 
 const StudentModel = model<IStudent>('Student', StudentSchema);

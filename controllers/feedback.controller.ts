@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import FeedbackModel from '../models/feedback.model';
+import FeedbackResponseModel from '../models/feedbackResponse.model';
 
 const feedbackController = {
     addFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
@@ -47,6 +48,19 @@ const feedbackController = {
             return res.status(500).json({ message: "Internal server error." });
         }
     },
+    feedbacks : async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const feedbacks = await FeedbackResponseModel.find().populate({
+                path: 'student',
+                select: 'name studentNumber gender residency branch email phone -_id' 
+            }).exec();
+    
+            return res.status(200).json(feedbacks);
+        } catch (error) {
+            console.error("Error fetching feedbacks:", error);
+            return res.status(500).json({ message: "Internal server error." });
+        }
+    }   
 }
 
 export default feedbackController;
