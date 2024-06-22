@@ -107,11 +107,20 @@ const adminController = {
     },
     updateQuestion: async(req:Request,res:Response):Promise<Response>=>{
         try {
-            const {questionnId,question,options,answer} = req.body;
-            const questionExists = await Question.findOneAndUpdate({quesId:questionnId},{question,options,answer});
-            if(!questionExists){
-                return res.status(400).json({message:"Question does not exist."});
+            const {quesId,question,options,subject , answer} = req.body;
+            
+            const updatedQuestion = await Question.findOneAndUpdate(
+                { quesId },
+                { question, options, subject, answer },
+                { new: true } 
+            );
+            console.log(updatedQuestion);
+            
+    
+            if (!updatedQuestion) {
+                return res.status(404).json({ message: "Question does not exist." });
             }
+    
             return res.status(200).json({message:"Question updated successfully."});
         }
         catch(error){
