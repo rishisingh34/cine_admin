@@ -7,18 +7,46 @@ import Visited from '../models/visited.model';
 import Token from '../middleware/token.middleware';
 import {sendPassword} from "../utils/mailer";
 import StudentModel from '../models/student.model'
+import { ADMIN_PASS } from '../config/env.config';
 
 const adminController = {
+    registerAdmin : async (req: Request, res: Response): Promise<Response> => { 
+        try{
+            const {admin_pass , username, password} = req.body;
+            if ( admin_pass !== ADMIN_PASS ) {
+                return res.status(400).json({ message: "Invalid Admin Password" });
+            }
+            const adminExists = await Admin.findOne({username});
+            if(adminExists){
+                return res.status(400).json({message:"Admin already exists."});
+            }
+            const admin = new Admin({
+                username,
+                password
+            });
+            await admin.save();
+            return res.status(201).json({message:"Admin registered successfully."});
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    },
     login: async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { username, password }: { username: string; password: string } = req.body;
-            const admin= await Admin.findOne({ username, password });
-
+            const { username, password }: { username: string; password: string } = req.body;      
+             
+            const admin= await Admin.findOne({ username : username });
+            
             if (!admin) {
-                return res.status(400).json({ message: "Invalid Credentials" });
+                return res.status(400).json({ message: "Invalid Username" });
             }
 
-            const accessToken = Token.signAccessToken(admin.id);
+            if (admin.password !== password) {
+                return res.status(400).json({ message: "Invalid Password" });
+            }
+
+            const accessToken = await Token.signAccessToken(admin.id);
+            
             res.cookie("accessToken", accessToken, {
                 httpOnly: true,
                 secure: true,
