@@ -129,8 +129,8 @@ const adminController = {
     },
     deleteQuestion: async(req:Request,res:Response):Promise<Response>=>{
         try {
-            const {questionId} = req.body;
-            const questionExists = await Question.findOneAndDelete({questionId});
+            const {quesId} = req.body;
+            const questionExists = await Question.findOneAndDelete({quesId});
             if(!questionExists){
                 return res.status(400).json({message:"Question does not exist."});
             }
