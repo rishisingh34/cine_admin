@@ -9,19 +9,21 @@ interface IStudent extends Document {
     email: string,
     phone: string,
     password: string,
-    isVerified: boolean
+    isVerified: boolean,
+    feedback: Schema.Types.ObjectId | null 
 }
 
 const StudentSchema = new Schema<IStudent>({
     name: { type: String, required: true },
     studentNumber: { type: String, required: true },
-    branch: { type: String, required: true},
+    branch: { type: String, required: true },
     gender: { type: String, required: true },
     residency: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    password: { type: String},
-    isVerified: { type: Boolean, required: true, default: false }
+    password: { type: String },
+    isVerified: { type: Boolean, required: true, default: false },
+    feedback: { type: Schema.Types.ObjectId, ref: 'Feedback', default: null }
 });
 
 const StudentModel = model<IStudent>('Student', StudentSchema);

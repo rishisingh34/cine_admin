@@ -1,13 +1,13 @@
 import Admin from '../models/admin.model';
 import { Request, Response } from 'express';
 import crypto from "crypto";
-import Question from '../models/question.model';
-import ResponseModel from '../models/response.model';
-import Visited from '../models/visited.model';
+import Question from '../models/question.model';   
 import Token from '../middleware/token.middleware';
 import {sendPassword} from "../utils/mailer";
 import StudentModel from '../models/student.model'
 import { ADMIN_PASS } from '../config/env.config';
+import ResponseModel from '../models/response.model';
+import Visited from '../models/visited.model';
 
 const adminController = {
     registerAdmin : async (req: Request, res: Response): Promise<Response> => { 
