@@ -20,9 +20,9 @@ const feedbackController = {
     },
     updateFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { question, quesNumber } = req.body;
+            const { question, quesId  } = req.body;
             
-            const updatedFeedback = await FeedbackModel.findOneAndUpdate({quesNumber }, { question }, { new: true });
+            const updatedFeedback = await FeedbackModel.findOneAndUpdate({quesId  }, { question }, { new: true });
             if (!updatedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
             }
