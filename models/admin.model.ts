@@ -1,7 +1,4 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
-
-
-
 interface IAdmin extends Document {
   username : string ;
   password : string ;

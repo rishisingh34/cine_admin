@@ -148,6 +148,36 @@ const adminController = {
             console.log(err);
             return res.status(500).json({message:"Internal server error."});
         }
+    },
+    getStudentTypes : async (req: Request, res: Response) => {
+        try {
+            let boysHostelCount = 0;
+            let girlsHostelCount = 0;
+            let boysDayScholarCount = 0;
+            let girlsDayScholarCount = 0;
+    
+            const students = await StudentModel.find();
+            students.forEach(student => {
+                if (student.gender === 'male' && student.residency === 'hostel') {
+                    boysHostelCount++;
+                } else if (student.gender === 'female' && student.residency === 'hostel') {
+                    girlsHostelCount++;
+                } else if (student.gender === 'male' && student.residency === 'day scholar') {
+                    boysDayScholarCount++;
+                } else if (student.gender === 'female' && student.residency === 'day scholar') {
+                    girlsDayScholarCount++;
+                }
+            });
+            res.status(200).json({
+                boysHostel: boysHostelCount,
+                girlsHostel: girlsHostelCount,
+                boysDayScholar: boysDayScholarCount,
+                girlsDayScholar: girlsDayScholarCount,
+            });
+        } catch (error) {
+            console.error("Error fetching students: ", error);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
     }
 }
 
