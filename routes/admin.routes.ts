@@ -10,5 +10,6 @@ router.post('/updateQuestion',auth, adminController.updateQuestion);
 router.post('/deleteQuestion',auth, adminController.deleteQuestion);
 router.post('/addQuestion',auth, adminController.addQuestion);
 router.get('/questions', adminController.questions ); 
+router.get('/getStudentTypes', adminController.getStudentTypes) ; 
 
 export default router;
