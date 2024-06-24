@@ -9,7 +9,7 @@ router.post('/addStudent',auth, adminController.addStudent);
 router.post('/updateQuestion',auth, adminController.updateQuestion);
 router.post('/deleteQuestion',auth, adminController.deleteQuestion);
 router.post('/addQuestion',auth, adminController.addQuestion);
-router.get('/questions', adminController.questions ); 
-router.get('/getStudentTypes', adminController.getStudentTypes) ; 
+router.get('/questions', auth, adminController.questions ); 
+router.get('/getStudentTypes', auth, adminController.getStudentTypes) ; 
 
 export default router;

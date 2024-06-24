@@ -143,7 +143,15 @@ const adminController = {
     questions : async (req : Request, res : Response ) : Promise<Response>  => {
         try {
             const questions = await Question.find({}).select("-_id");
-            return res.status(200).json(questions);
+            const groupedQuestions=questions.reduce((acc,question)=>{
+                const key=question.subject;
+                if(!acc[key]){
+                    acc[key]=[];
+                }
+                acc[key].push(question);
+                return acc;
+            },{} as {[key: string]: any});
+            return res.status(200).json(groupedQuestions);
         } catch (err) {
             console.log(err);
             return res.status(500).json({message:"Internal server error."});
