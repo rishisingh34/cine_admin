@@ -1,18 +1,26 @@
-import express,{ Express } from "express";
+import express, { Express } from 'express';
+import http from 'http';
 import cookieParser from 'cookie-parser';
-import {PORT} from './config/env.config';
+import { PORT } from './config/env.config';
 import connectDb from './config/db.config';
-import adminRoutes from './routes/admin.routes'
-import feedbackRoutes from './routes/feedback.routes' 
+import adminRoutes from './routes/admin.routes';
+import feedbackRoutes from './routes/feedback.routes';
+import { setupSocketServer } from './utils/leaderboardController';
+import { Server } from 'socket.io';
+
 const app: Express = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(express.json());
 app.use(cookieParser());
+
 connectDb();
 
-app.use("/admin" ,adminRoutes); 
-app.use("/admin/feedback" ,feedbackRoutes);
+app.use('/admin', adminRoutes);
+app.use('/admin/feedback', feedbackRoutes);
+setupSocketServer(io);
 
-app.listen(PORT, ():void=> {
+server.listen(PORT, (): void => {
   console.log(`Server is running on port ${PORT}`);
 });
