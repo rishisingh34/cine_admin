@@ -18,6 +18,15 @@ const feedbackController = {
             return res.status(500).json({ message: "Internal server error." });
         }
     },
+    getFeedBackQuestions : async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const feedbacks = await FeedbackModel.find().select('question quesId -_id').exec();
+            return res.status(200).json(feedbacks);
+        } catch (error) {
+            console.error("Error fetching feedback questions:", error);
+            return res.status(500).json({ message: "Internal server error." });
+        }
+    },
     updateFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
             const { question, quesId  } = req.body;
