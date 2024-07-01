@@ -1,13 +1,13 @@
-import mongoose, { Document, Schema, Model } from 'mongoose';
+import mongoose, { Document, Schema, Model, Types} from 'mongoose';
 
 interface IVisited extends Document {
-  userId: string;
-  quesId: number[];
+  userId: Types.ObjectId;
+  quesId: Types.ObjectId[];
 }
 
 const visitedSchema: Schema<IVisited> = new Schema({
-  quesId: [{ type: Number, required: true }],
-  userId: { type: String, required: true },
+  quesId: [{ type: Schema.Types.ObjectId, ref:'Question', required: true }],
+  userId: { type: Schema.Types.ObjectId, ref:'Student', required: true },
 });
 
 const Visited: Model<IVisited> = mongoose.model<IVisited>('Visited', visitedSchema);

@@ -5,10 +5,9 @@ import FeedbackResponseModel from '../models/feedbackResponse.model';
 const feedbackController = {
     addFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { question, quesId } = req.body;
+            const { question} = req.body;
             const newFeedback= new FeedbackModel({
-                question,
-                quesId
+                question
             });
             await newFeedback.save();
     
@@ -20,7 +19,7 @@ const feedbackController = {
     },
     getFeedBackQuestions : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const feedbacks = await FeedbackModel.find().select('question quesId -_id').exec();
+            const feedbacks = await FeedbackModel.find();
             return res.status(200).json(feedbacks);
         } catch (error) {
             console.error("Error fetching feedback questions:", error);
@@ -31,7 +30,7 @@ const feedbackController = {
         try {
             const { question, quesId  } = req.body;
             
-            const updatedFeedback = await FeedbackModel.findOneAndUpdate({quesId  }, { question }, { new: true });
+            const updatedFeedback = await FeedbackModel.findOneAndUpdate({id: quesId  }, { question }, { new: true });
             if (!updatedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
             }
@@ -45,7 +44,7 @@ const feedbackController = {
     deleteFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
             const { quesId} = req.body;
-            const deletedFeedback = await FeedbackModel.findOneAndDelete({quesId});
+            const deletedFeedback = await FeedbackModel.findOneAndDelete({id:quesId});
     
             if (!deletedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });

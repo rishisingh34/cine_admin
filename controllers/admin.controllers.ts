@@ -87,10 +87,9 @@ const adminController = {
     },
     addQuestion : async (req:Request,res:Response):Promise<Response>=>{
         try {
-            const {quesId,question , options , subject, answer } = req.body;
+            const {question , options , subject, answer } = req.body;
             
             const newQuestion = new Question({
-                quesId,
                 subject,
                 question,
                 options,
@@ -110,12 +109,10 @@ const adminController = {
             const {quesId,question,options,subject , answer} = req.body;
             
             const updatedQuestion = await Question.findOneAndUpdate(
-                { quesId },
+                { id:quesId },
                 { question, options, subject, answer },
                 { new: true } 
             );
-            console.log(updatedQuestion);
-            
     
             if (!updatedQuestion) {
                 return res.status(404).json({ message: "Question does not exist." });
@@ -130,7 +127,7 @@ const adminController = {
     deleteQuestion: async(req:Request,res:Response):Promise<Response>=>{
         try {
             const {quesId} = req.body;
-            const questionExists = await Question.findOneAndDelete({quesId});
+            const questionExists = await Question.findOneAndDelete({id:quesId});
             if(!questionExists){
                 return res.status(400).json({message:"Question does not exist."});
             }
@@ -142,7 +139,7 @@ const adminController = {
     },
     questions : async (req : Request, res : Response ) : Promise<Response>  => {
         try {
-            const questions = await Question.find({}).select("-_id");
+            const questions = await Question.find({});
             const groupedQuestions=questions.reduce((acc,question)=>{
                 const key=question.subject;
                 if(!acc[key]){
