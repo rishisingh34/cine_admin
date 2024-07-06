@@ -54,11 +54,12 @@ const feedbackController = {
     },
     feedbacks : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const feedbacks = await FeedbackResponseModel.find().populate({
+            const feedbacks = await FeedbackResponseModel.find()
+            .populate({
                 path: 'student',
-                select: 'name studentNumber gender residency branch email phone -_id' 
-            }).exec();
-    
+                select: 'name studentNumber gender residency branch email phone' 
+            }).lean().exec();
+
             return res.status(200).json(feedbacks);
         } catch (error) {
             return res.status(500).json({ message: "Internal server error." });
