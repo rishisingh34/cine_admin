@@ -5,23 +5,15 @@ import FeedbackResponseModel from '../models/feedbackResponse.model';
 const feedbackController = {
     addFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { question} = req.body;
+            const { question, quesId } = req.body;
             const newFeedback= new FeedbackModel({
-                question
+                question,
+                quesId
             });
             await newFeedback.save();
     
             return res.status(201).json({ message: "Feedback question added successfully."});
         } catch (error) {
-            return res.status(500).json({ message: "Internal server error." });
-        }
-    },
-    getFeedBackQuestions : async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const feedbacks = await FeedbackModel.find();
-            return res.status(200).json(feedbacks);
-        } catch (error) {
-            console.error("Error fetching feedback questions:", error);
             return res.status(500).json({ message: "Internal server error." });
         }
     },
