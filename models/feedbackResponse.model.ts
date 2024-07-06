@@ -15,7 +15,7 @@ const FeedbackResponseSchema = new Schema<IFeedbackResponse>({
         question: { type: String, required: true },
         ans: { type: String, required: true }
     }]
-});
+}, {versionKey: false});
 
 const FeedbackResponseModel = model<IFeedbackResponse>('FeedbackResponse', FeedbackResponseSchema);
 
