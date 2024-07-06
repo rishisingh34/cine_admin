@@ -14,7 +14,15 @@ const feedbackController = {
     
             return res.status(201).json({ message: "Feedback question added successfully."});
         } catch (error) {
-            console.error("Error adding feedback question:", error);
+            return res.status(500).json({ message: "Internal server error." });
+        }
+    },
+    getFeedBackQuestions : async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const feedbacks = await FeedbackModel.find();
+            return res.status(200).json(feedbacks);
+        } catch (error) {
+            console.error("Error fetching feedback questions:", error);
             return res.status(500).json({ message: "Internal server error." });
         }
     },
@@ -22,29 +30,25 @@ const feedbackController = {
         try {
             const { question, quesId  } = req.body;
             
-            const updatedFeedback = await FeedbackModel.findOneAndUpdate({quesId  }, { question }, { new: true });
+            const updatedFeedback = await FeedbackModel.findByIdAndUpdate(quesId , { question }, { new: true });
             if (!updatedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
             }
     
             return res.status(200).json({ message: "Feedback entry updated successfully." });
         } catch (error) {
-            console.error("Error updating feedback question:", error);
             return res.status(500).json({ message: "Internal server error." });
         }
     },
     deleteFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
             const { quesId} = req.body;
-            const deletedFeedback = await FeedbackModel.findOneAndDelete({quesId});
-    
+            const deletedFeedback = await FeedbackModel.findByIdAndDelete(quesId);    
             if (!deletedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
-            }
-    
+            }    
             return res.status(200).json({ message: "Feedback entry deleted successfully." });
         } catch (error) {
-            console.error("Error deleting feedback question:", error);
             return res.status(500).json({ message: "Internal server error." });
         }
     },
@@ -57,7 +61,6 @@ const feedbackController = {
     
             return res.status(200).json(feedbacks);
         } catch (error) {
-            console.error("Error fetching feedbacks:", error);
             return res.status(500).json({ message: "Internal server error." });
         }
     }   

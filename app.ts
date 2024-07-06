@@ -1,6 +1,5 @@
 import express, { Express } from 'express';
 import http from 'http';
-import cookieParser from 'cookie-parser';
 import { PORT } from './config/env.config';
 import connectDb from './config/db.config';
 import adminRoutes from './routes/admin.routes';
@@ -13,7 +12,6 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 app.use(express.json());
-app.use(cookieParser());
 
 connectDb();
 
