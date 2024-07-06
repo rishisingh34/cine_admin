@@ -5,7 +5,7 @@ interface IFeedback extends Document {
 }
 
 const FeedbackSchema = new Schema<IFeedback>({
-    question: { type: String, required: true },
+    question: { type: String, required: true }
 }, {versionKey: false});
 
 const Feedback = model<IFeedback>('Feedback', FeedbackSchema);
