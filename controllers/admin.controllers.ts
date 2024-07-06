@@ -109,7 +109,7 @@ const adminController = {
             const {quesId,question,options,subject , answer} = req.body;
             
             const updatedQuestion = await Question.findOneAndUpdate(
-                { id:quesId },
+                { _id:quesId },
                 { question, options, subject, answer },
                 { new: true } 
             );
@@ -127,7 +127,8 @@ const adminController = {
     deleteQuestion: async(req:Request,res:Response):Promise<Response>=>{
         try {
             const {quesId} = req.body;
-            const questionExists = await Question.findOneAndDelete({id:quesId});
+            const questionExists = await Question.findOneAndDelete({_id:quesId});
+            console.log(questionExists)
             if(!questionExists){
                 return res.status(400).json({message:"Question does not exist."});
             }

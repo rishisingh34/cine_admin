@@ -30,7 +30,7 @@ const feedbackController = {
         try {
             const { question, quesId  } = req.body;
             
-            const updatedFeedback = await FeedbackModel.findOneAndUpdate({id: quesId  }, { question }, { new: true });
+            const updatedFeedback = await FeedbackModel.findOneAndUpdate({_id: quesId  }, { question }, { new: true });
             if (!updatedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
             }
@@ -44,7 +44,7 @@ const feedbackController = {
     deleteFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
             const { quesId} = req.body;
-            const deletedFeedback = await FeedbackModel.findOneAndDelete({id:quesId});
+            const deletedFeedback = await FeedbackModel.findOneAndDelete({_id:quesId});
     
             if (!deletedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
