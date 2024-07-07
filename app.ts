@@ -9,7 +9,7 @@ import { Server } from 'socket.io';
 
 const app: Express = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, { cors: { origin: '*' } });
 
 app.use(express.json());
 
@@ -19,6 +19,10 @@ app.use('/admin', adminRoutes);
 app.use('/admin/feedback', feedbackRoutes);
 setupSocketServer(io);
 
-server.listen(PORT, (): void => {
+server.listen(3001, (): void => {
+  console.log('Socket server is running on port 3001');
+})
+
+app.listen(PORT, (): void => {
   console.log(`Server is running on port ${PORT}`);
 });

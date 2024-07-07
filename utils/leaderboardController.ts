@@ -11,12 +11,12 @@ export const setupSocketServer = (io: Server) => {
   });
 
   const emitLeaderboardData = async () => {
-    try {
+    try {      
       const leaderboard = await calculateLeaderBoard();
       io.emit('leaderboard', leaderboard);
     } catch (error) {
       console.error('Error calculating leaderboard:', error);
     }
   };
-  setInterval(emitLeaderboardData, 25000);
+  setInterval(emitLeaderboardData, 15000);
 };

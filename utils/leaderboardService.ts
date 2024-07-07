@@ -1,6 +1,6 @@
 import mongoose, { Types, PipelineStage } from 'mongoose';
 import ResponseModel from '../models/response.model'; 
-import Student from '../models/student.model'
+import Student from '../models/student.model';
 
 interface IStudentLeaderboard {
   name: string;
@@ -15,9 +15,9 @@ async function calculateLeaderboard(): Promise<IStudentLeaderboard[]> {
   const pipeline: PipelineStage[] = [
     {
       $lookup: {
-        from: 'questions', 
+        from: 'questions',
         localField: 'quesId',
-        foreignField: 'quesId',
+        foreignField: '_id',
         as: 'questionDetails',
       },
     },
@@ -28,7 +28,7 @@ async function calculateLeaderboard(): Promise<IStudentLeaderboard[]> {
       $project: {
         userId: 1,
         isCorrect: {
-          $cond: [{ $eq: ['$ansId', '$questionDetails.answer'] }, 4, 0],
+          $cond: [{ $eq: ['$ansId', '$questionDetails.answer'] }, 4, -1],
         },
       },
     },
@@ -40,7 +40,7 @@ async function calculateLeaderboard(): Promise<IStudentLeaderboard[]> {
     },
     {
       $lookup: {
-        from: 'students', 
+        from: 'students',
         localField: '_id',
         foreignField: '_id',
         as: 'studentDetails',
