@@ -6,6 +6,6 @@ interface IVisited extends Document {
 const visitedSchema: Schema<IVisited> = new Schema({
   quesId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question', required: true }],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },
-});
+}, {versionKey : false } );
 const Visited: Model<IVisited> = mongoose.model<IVisited>('Visited', visitedSchema);
 export default Visited;
