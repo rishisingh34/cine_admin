@@ -19,10 +19,6 @@ app.use('/admin', adminRoutes);
 app.use('/admin/feedback', feedbackRoutes);
 setupSocketServer(io);
 
-server.listen(3001, (): void => {
-  console.log('Socket server is running on port 3001');
-})
-
-app.listen(PORT, (): void => {
-  console.log(`Server is running on port ${PORT}`);
+server.listen(PORT, (): void => {
+  console.log(`Server (HTTP and WebSocket) is running on port ${PORT}`);
 });
