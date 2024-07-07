@@ -8,5 +8,6 @@ router.delete('/deleteQuestion', adminController.deleteQuestion);
 router.post('/addQuestion', adminController.addQuestion);
 router.get('/questions',  adminController.questions ); 
 router.get('/getStudentTypes',  adminController.getStudentTypes) ; 
+router.get('/students', adminController.students)
 
 export default router;

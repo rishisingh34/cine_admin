@@ -93,6 +93,14 @@ const adminController = {
             return res.status(500).json({message:"Internal server error."});
         }
     },
+    students : async (req : Request, res : Response ) : Promise<Response> => {
+        try {
+            const students = await StudentModel.find().select('-password -_id'); 
+            return res.status(200).json(students);
+        } catch (err) {
+            return res.status(500).json({message:"Internal server error."});
+        }
+    }, 
     getStudentTypes : async (req: Request, res: Response) => {
         try {
             let boysHostelCount = 0;
