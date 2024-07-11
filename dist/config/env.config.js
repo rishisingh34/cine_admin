@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ADMIN_PASS = exports.PASS = exports.EMAIL = exports.ACCESS_TOKEN_SECRET = exports.DBURI = exports.PORT = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const PORT = process.env.PORT || '3000';
+exports.PORT = PORT;
+const DBURI = process.env.DBURI || "mongodb://localhost:27017/studentDb";
+exports.DBURI = DBURI;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+exports.ACCESS_TOKEN_SECRET = ACCESS_TOKEN_SECRET;
+const EMAIL = process.env.EMAIL;
+exports.EMAIL = EMAIL;
+const PASS = process.env.PASS;
+exports.PASS = PASS;
+const ADMIN_PASS = process.env.ADMIN_PASS;
+exports.ADMIN_PASS = ADMIN_PASS;
