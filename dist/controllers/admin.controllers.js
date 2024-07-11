@@ -103,6 +103,15 @@ const adminController = {
             return res.status(500).json({ message: "Internal server error." });
         }
     }),
+    students: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const students = yield student_model_1.default.find().select('-password -_id');
+            return res.status(200).json(students);
+        }
+        catch (err) {
+            return res.status(500).json({ message: "Internal server error." });
+        }
+    }),
     getStudentTypes: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             let boysHostelCount = 0;
