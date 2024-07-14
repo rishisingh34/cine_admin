@@ -28,7 +28,7 @@ async function calculateLeaderboard(): Promise<IStudentLeaderboard[]> {
       $project: {
         userId: 1,
         isCorrect: {
-          $cond: [{ $eq: ['$ansId', '$questionDetails.answer'] }, 4, -1],
+          $cond: [{ $eq: ['$ansId', '$questionDetails.answer'] }, 4, 0],
         },
       },
     },

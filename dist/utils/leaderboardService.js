@@ -31,7 +31,7 @@ function calculateLeaderboard() {
                 $project: {
                     userId: 1,
                     isCorrect: {
-                        $cond: [{ $eq: ['$ansId', '$questionDetails.answer'] }, 4, -1],
+                        $cond: [{ $eq: ['$ansId', '$questionDetails.answer'] }, 4, 0],
                     },
                 },
             },
