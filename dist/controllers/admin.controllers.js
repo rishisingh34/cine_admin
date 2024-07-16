@@ -47,6 +47,9 @@ const adminController = {
     addQuestion: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { question, options, subject, answer } = req.body;
+            if (!question || !options || !subject || !answer) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const newQuestion = new question_model_1.default({
                 subject,
                 question,
