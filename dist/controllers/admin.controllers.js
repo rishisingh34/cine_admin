@@ -66,6 +66,9 @@ const adminController = {
     updateQuestion: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { quesId, question, options, subject, answer } = req.body;
+            if (!question || !options || !subject || !answer) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const updatedQuestion = yield question_model_1.default.findByIdAndUpdate(quesId, { question, options, subject, answer });
             if (!updatedQuestion) {
                 return res.status(404).json({ message: "Question does not exist." });
