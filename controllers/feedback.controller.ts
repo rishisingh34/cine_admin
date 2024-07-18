@@ -5,13 +5,15 @@ import FeedbackResponseModel from '../models/feedbackResponse.model';
 const feedbackController = {
     addFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const { question, quesId } = req.body;
+            const { question } = req.body;
+            if (!question) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const newFeedback= new FeedbackModel({
-                question,
-                quesId
+                question
             });
             await newFeedback.save();
-    
+
             return res.status(201).json({ message: "Feedback question added successfully."});
         } catch (error) {
             return res.status(500).json({ message: "Internal server error." });
@@ -29,7 +31,9 @@ const feedbackController = {
     updateFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
         try {
             const { question, quesId  } = req.body;
-            
+            if(!question || !quesId) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const updatedFeedback = await FeedbackModel.findByIdAndUpdate(quesId , { question }, { new: true });
             if (!updatedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
