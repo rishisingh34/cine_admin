@@ -17,10 +17,12 @@ const feedbackResponse_model_1 = __importDefault(require("../models/feedbackResp
 const feedbackController = {
     addFeedBackQuestion: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const { question, quesId } = req.body;
+            const { question } = req.body;
+            if (!question) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const newFeedback = new feedback_model_1.default({
-                question,
-                quesId
+                question
             });
             yield newFeedback.save();
             return res.status(201).json({ message: "Feedback question added successfully." });
@@ -42,6 +44,9 @@ const feedbackController = {
     updateFeedBackQuestion: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { question, quesId } = req.body;
+            if (!question || !quesId) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const updatedFeedback = yield feedback_model_1.default.findByIdAndUpdate(quesId, { question }, { new: true });
             if (!updatedFeedback) {
                 return res.status(404).json({ message: "Feedback entry not found." });
