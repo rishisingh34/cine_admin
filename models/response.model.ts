@@ -1,7 +1,10 @@
 import mongoose, { Document, Schema, Model , Types} from 'mongoose';
 
 interface IResponse extends Document {
-  quesId: Types.ObjectId;
+  quesId: {
+    type: Types.ObjectId,
+    subject: string
+  };
   status: number;
   userId: Types.ObjectId;
   ansId: number;

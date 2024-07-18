@@ -13,4 +13,5 @@ router.post('/addQuestion', admin_controllers_1.default.addQuestion);
 router.get('/questions', admin_controllers_1.default.questions);
 router.get('/getStudentTypes', admin_controllers_1.default.getStudentTypes);
 router.get('/students', admin_controllers_1.default.students);
+router.get('/responses', admin_controllers_1.default.responses);
 exports.default = router;

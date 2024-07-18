@@ -3,6 +3,7 @@ import crypto from "crypto";
 import Question from '../models/question.model';   
 import {sendPassword} from "../utils/mailer";
 import StudentModel from '../models/student.model'
+import ResponseModel from '../models/response.model';
 import { log } from 'console';
 
 const adminController = {
@@ -128,6 +129,28 @@ const adminController = {
             });
         } catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    },
+    responses : async (req : Request, res : Response ) : Promise<Response> => {
+        try{
+            const {studentNumber} = req.body;
+            const student = await StudentModel.findOne({studentNumber});
+            if(!student){
+                return res.status(400).json({message:"Student does not exist."});
+            }
+            const responses = await ResponseModel.find({userId:student._id}).populate({path:'quesId', select: 'subject question options answer'}).select('-_id -userId -__v');
+            const groupedQuestions=responses.reduce((acc,response)=>{
+                const key=response.quesId.subject;
+                if(!acc[key]){
+                    acc[key]=[];
+                }
+                acc[key].push(response);
+                return acc;
+            },{} as {[key: string]: any});
+            return res.status(200).json(groupedQuestions);
+        }
+        catch(err){
+            return res.status(500).json({message:"Internal server error."});
         }
     }
 }

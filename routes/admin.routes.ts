@@ -9,5 +9,6 @@ router.post('/addQuestion', adminController.addQuestion);
 router.get('/questions',  adminController.questions ); 
 router.get('/getStudentTypes',  adminController.getStudentTypes) ; 
 router.get('/students', adminController.students)
+router.get('/responses', adminController.responses)
 
 export default router;

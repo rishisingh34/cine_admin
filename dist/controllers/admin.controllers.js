@@ -16,6 +16,7 @@ const crypto_1 = __importDefault(require("crypto"));
 const question_model_1 = __importDefault(require("../models/question.model"));
 const mailer_1 = require("../utils/mailer");
 const student_model_1 = __importDefault(require("../models/student.model"));
+const response_model_1 = __importDefault(require("../models/response.model"));
 const adminController = {
     addStudent: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -142,6 +143,28 @@ const adminController = {
         }
         catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    }),
+    responses: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const { studentNumber } = req.body;
+            const student = yield student_model_1.default.findOne({ studentNumber });
+            if (!student) {
+                return res.status(400).json({ message: "Student does not exist." });
+            }
+            const responses = yield response_model_1.default.find({ userId: student._id }).populate({ path: 'quesId', select: 'subject question options answer' }).select('-_id -userId -__v');
+            const groupedQuestions = responses.reduce((acc, response) => {
+                const key = response.quesId.subject;
+                if (!acc[key]) {
+                    acc[key] = [];
+                }
+                acc[key].push(response);
+                return acc;
+            }, {});
+            return res.status(200).json(groupedQuestions);
+        }
+        catch (err) {
+            return res.status(500).json({ message: "Internal server error." });
         }
     })
 };
