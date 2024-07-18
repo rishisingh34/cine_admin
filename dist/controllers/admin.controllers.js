@@ -13,10 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = __importDefault(require("crypto"));
-const question_model_1 = __importDefault(require("../models/question.model"));
+const question_model_1 = require("../models/question.model");
 const mailer_1 = require("../utils/mailer");
 const student_model_1 = __importDefault(require("../models/student.model"));
 const response_model_1 = __importDefault(require("../models/response.model"));
+const console_1 = require("console");
 const adminController = {
     addStudent: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -51,7 +52,7 @@ const adminController = {
             if (!question || !options || !subject || !answer) {
                 return res.status(400).json({ message: "All fields are required." });
             }
-            const newQuestion = new question_model_1.default({
+            const newQuestion = new question_model_1.Question({
                 subject,
                 question,
                 options,
@@ -70,7 +71,7 @@ const adminController = {
             if (!question || !options || !subject || !answer) {
                 return res.status(400).json({ message: "All fields are required." });
             }
-            const updatedQuestion = yield question_model_1.default.findByIdAndUpdate(quesId, { question, options, subject, answer });
+            const updatedQuestion = yield question_model_1.Question.findByIdAndUpdate(quesId, { question, options, subject, answer });
             if (!updatedQuestion) {
                 return res.status(404).json({ message: "Question does not exist." });
             }
@@ -83,7 +84,7 @@ const adminController = {
     deleteQuestion: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { quesId } = req.body;
-            const questionExists = yield question_model_1.default.findByIdAndDelete(quesId);
+            const questionExists = yield question_model_1.Question.findByIdAndDelete(quesId);
             if (!questionExists) {
                 return res.status(400).json({ message: "Question does not exist." });
             }
@@ -95,7 +96,7 @@ const adminController = {
     }),
     questions: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const questions = yield question_model_1.default.find({});
+            const questions = yield question_model_1.Question.find({});
             const groupedQuestions = questions.reduce((acc, question) => {
                 const key = question.subject;
                 if (!acc[key]) {
@@ -158,18 +159,21 @@ const adminController = {
             if (!student) {
                 return res.status(400).json({ message: "Student does not exist." });
             }
-            const responses = yield response_model_1.default.find({ userId: student._id }).populate({ path: 'quesId', select: 'subject question options answer' }).select('-_id -userId -__v');
+            const responses = yield response_model_1.default.find({ userId: student._id }).populate({ path: 'quesId', select: 'question subject options status answer -_id' }).select('-_id -userId -__v');
             const groupedQuestions = responses.reduce((acc, response) => {
-                const key = response.quesId.subject;
-                if (!acc[key]) {
-                    acc[key] = [];
+                if (response.quesId && response.quesId.subject) {
+                    const key = response.quesId.subject;
+                    if (!acc[key]) {
+                        acc[key] = [];
+                    }
+                    acc[key].push(response);
                 }
-                acc[key].push(response);
                 return acc;
             }, {});
             return res.status(200).json(groupedQuestions);
         }
         catch (err) {
+            (0, console_1.log)(err);
             return res.status(500).json({ message: "Internal server error." });
         }
     })

@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Question = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const optionSchema = new mongoose_1.Schema({
     desc: { type: String, required: true },
@@ -35,4 +36,4 @@ const questionSchema = new mongoose_1.Schema({
     answer: { type: Number, required: true }
 }, { versionKey: false });
 const Question = mongoose_1.default.model('Question', questionSchema);
-exports.default = Question;
+exports.Question = Question;

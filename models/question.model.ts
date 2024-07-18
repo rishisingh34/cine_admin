@@ -1,3 +1,4 @@
+import exp from 'constants';
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 interface IOption {
@@ -26,4 +27,4 @@ const questionSchema: Schema<IQuestion> = new Schema({
 
 const Question: Model<IQuestion> = mongoose.model<IQuestion>('Question', questionSchema);
 
-export default Question;
+export { IQuestion, Question };

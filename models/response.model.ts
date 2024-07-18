@@ -1,10 +1,8 @@
 import mongoose, { Document, Schema, Model , Types} from 'mongoose';
+import {IQuestion} from './question.model';
 
 interface IResponse extends Document {
-  quesId: {
-    type: Types.ObjectId,
-    subject: string
-  };
+  quesId: IQuestion;
   status: number;
   userId: Types.ObjectId;
   ansId: number;

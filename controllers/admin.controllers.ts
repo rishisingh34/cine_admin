@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import crypto from "crypto";
-import Question from '../models/question.model';   
+import {Question} from '../models/question.model';   
 import {sendPassword} from "../utils/mailer";
 import StudentModel from '../models/student.model'
 import ResponseModel from '../models/response.model';
 import { log } from 'console';
+import { json } from 'stream/consumers';
 
 const adminController = {
     addStudent: async(req:Request,res:Response):Promise<Response>=>{
@@ -142,18 +143,21 @@ const adminController = {
             if(!student){
                 return res.status(400).json({message:"Student does not exist."});
             }
-            const responses = await ResponseModel.find({userId:student._id}).populate({path:'quesId', select: 'subject question options answer'}).select('-_id -userId -__v');
+            const responses = await ResponseModel.find({userId:student._id}).populate({path:'quesId', select:'question subject options status answer -_id'}).select('-_id -userId -__v');
             const groupedQuestions=responses.reduce((acc,response)=>{
-                const key=response.quesId.subject;
-                if(!acc[key]){
-                    acc[key]=[];
+                if(response.quesId && response.quesId.subject){
+                    const key=response.quesId.subject;
+                    if(!acc[key]){
+                        acc[key]=[];
+                    }
+                    acc[key].push(response);
                 }
-                acc[key].push(response);
                 return acc;
             },{} as {[key: string]: any});
             return res.status(200).json(groupedQuestions);
         }
         catch(err){
+            log(err);
             return res.status(500).json({message:"Internal server error."});
         }
     }
