@@ -36,7 +36,9 @@ const adminController = {
     addQuestion : async (req:Request,res:Response):Promise<Response>=>{
         try {
             const {question , options , subject, answer } = req.body;
-            
+            if (!question || !options || !subject || !answer) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const newQuestion = new Question({
                 subject,
                 question,
@@ -54,7 +56,9 @@ const adminController = {
     updateQuestion: async(req:Request,res:Response):Promise<Response>=>{
         try {
             const {quesId,question,options,subject , answer} = req.body;
-            
+            if (!question || !options || !subject || !answer) {
+                return res.status(400).json({ message: "All fields are required." });
+            }
             const updatedQuestion = await Question.findByIdAndUpdate(quesId , {question,options,subject,answer});            
             if (!updatedQuestion) {
                 return res.status(404).json({ message: "Question does not exist." });
