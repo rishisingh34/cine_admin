@@ -113,7 +113,10 @@ const adminController = {
     }),
     students: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const students = yield student_model_1.default.find().select('-password -_id');
+            const page = req.query.page || 1;
+            const limit = 20;
+            const skip = (parseInt(page) - 1) * limit;
+            const students = yield student_model_1.default.find({ isVerified: true }).select('-password -_id').skip(skip).limit(limit);
             return res.status(200).json(students);
         }
         catch (err) {

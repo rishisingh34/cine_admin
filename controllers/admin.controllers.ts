@@ -101,12 +101,15 @@ const adminController = {
     },
     students : async (req : Request, res : Response ) : Promise<Response> => {
         try {
-            const students = await StudentModel.find().select('-password -_id'); 
+            const page=req.query.page || 1;
+            const limit=20;
+            const skip=(parseInt(page as string)-1)*limit;
+            const students = await StudentModel.find({isVerified:true}).select('-password -_id').skip(skip).limit(limit); 
             return res.status(200).json(students);
         } catch (err) {
             return res.status(500).json({message:"Internal server error."});
         }
-    }, 
+    },  
     getStudentTypes : async (req: Request, res: Response) => {
         try {
             let boysHostelCount = 0;
