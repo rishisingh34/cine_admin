@@ -179,6 +179,15 @@ const adminController = {
             (0, console_1.log)(err);
             return res.status(500).json({ message: "Internal server error." });
         }
+    }),
+    searchStudent: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const students = yield student_model_1.default.find({ name: { $regex: req.query.name || "" }, studentNumber: { $regex: req.query.studentNumber || "" } }).select('-password -_id');
+            return res.status(200).json(students);
+        }
+        catch (err) {
+            return res.status(500).json({ message: "Internal server error." });
+        }
     })
 };
 exports.default = adminController;
