@@ -72,7 +72,10 @@ const feedbackController = {
     }),
     feedbacks: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const feedbacks = yield feedbackResponse_model_1.default.find()
+            const page = req.query.page || 1;
+            const limit = 20;
+            const skip = (parseInt(page) - 1) * limit;
+            const feedbacks = yield feedbackResponse_model_1.default.find().skip(skip).limit(limit)
                 .populate({
                 path: 'student',
                 select: 'name studentNumber gender residency branch email phone'
