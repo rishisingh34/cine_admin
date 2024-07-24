@@ -58,7 +58,10 @@ const feedbackController = {
     },
     feedbacks : async (req: Request, res: Response): Promise<Response> => {
         try {
-            const feedbacks = await FeedbackResponseModel.find()
+            const page=req.query.page || 1;
+            const limit=20;
+            const skip=(parseInt(page as string)-1)*limit;
+            const feedbacks = await FeedbackResponseModel.find().skip(skip).limit(limit)
             .populate({
                 path: 'student',
                 select: 'name studentNumber gender residency branch email phone' 
