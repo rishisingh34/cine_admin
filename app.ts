@@ -6,12 +6,14 @@ import adminRoutes from './routes/admin.routes';
 import feedbackRoutes from './routes/feedback.routes';
 import { setupSocketServer } from './utils/leaderboardController';
 import { Server } from 'socket.io';
+import handlecors from './config/cors.config';
 
 const app: Express = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
 app.use(express.json());
+app.use(handlecors);
 
 connectDb();
 
