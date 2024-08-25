@@ -40,6 +40,9 @@ const adminController = {
             if (!question || !options || !subject || !answer) {
                 return res.status(400).json({ message: "All fields are required." });
             }
+            if(answer<1 || answer>4){
+                return res.status(400).json({message:"Invalid answer."});
+            }
             const newQuestion = new Question({
                 subject,
                 question,
@@ -59,6 +62,9 @@ const adminController = {
             const {quesId,question,options,subject , answer} = req.body;
             if (!question || !options || !subject || !answer) {
                 return res.status(400).json({ message: "All fields are required." });
+            }
+            if(answer<1 || answer>4){
+                return res.status(400).json({message:"Invalid answer."});
             }
             const updatedQuestion = await Question.findByIdAndUpdate(quesId , {question,options,subject,answer});            
             if (!updatedQuestion) {
