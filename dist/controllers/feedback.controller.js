@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const feedback_model_1 = __importDefault(require("../models/feedback.model"));
 const feedbackResponse_model_1 = __importDefault(require("../models/feedbackResponse.model"));
+const student_model_1 = __importDefault(require("../models/student.model"));
 const feedbackController = {
     addFeedBackQuestion: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -80,6 +81,16 @@ const feedbackController = {
                 path: 'student',
                 select: 'name studentNumber gender residency branch email phone'
             }).lean().exec();
+            return res.status(200).json(feedbacks);
+        }
+        catch (error) {
+            return res.status(500).json({ message: "Internal server error." });
+        }
+    }),
+    searchFeedbacks: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const students = yield student_model_1.default.find({ name: { $regex: req.query.name || "" }, studentNumber: { $regex: req.query.studentNumber || "" } });
+            const feedbacks = yield feedbackResponse_model_1.default.find({ student: { $in: students.map(student => student._id) } });
             return res.status(200).json(feedbacks);
         }
         catch (error) {

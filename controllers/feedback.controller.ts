@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import FeedbackModel from '../models/feedback.model';
 import FeedbackResponseModel from '../models/feedbackResponse.model';
+import StudentModel from '../models/student.model';
 
 const feedbackController = {
     addFeedBackQuestion : async (req: Request, res: Response): Promise<Response> => {
@@ -71,7 +72,16 @@ const feedbackController = {
         } catch (error) {
             return res.status(500).json({ message: "Internal server error." });
         }
-    }   
+    },
+    searchFeedbacks : async (req: Request, res: Response): Promise<Response> => {
+        try{
+            const students=await StudentModel.find({name:{$regex:req.query.name || "" as string},studentNumber:{$regex:req.query.studentNumber || "" as string}});
+            const feedbacks=await FeedbackResponseModel.find({student:{$in:students.map(student=>student._id)}});
+            return res.status(200).json(feedbacks);
+        }
+        catch(error){
+            return res.status(500).json({message:"Internal server error."});
+        }
+    }
 }
-
 export default feedbackController;

@@ -11,4 +11,5 @@ router.get('/getFeedBackQuestions', feedback_controller_1.default.getFeedBackQue
 router.patch('/updateFeedBackQuestion', feedback_controller_1.default.updateFeedBackQuestion);
 router.delete('/deleteFeedBackQuestion', feedback_controller_1.default.deleteFeedBackQuestion);
 router.get('/feedbacks', feedback_controller_1.default.feedbacks);
+router.get('/searchFeedback', feedback_controller_1.default.searchFeedbacks);
 exports.default = router;
