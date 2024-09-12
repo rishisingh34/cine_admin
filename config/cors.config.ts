@@ -2,7 +2,7 @@ import cors from "cors";
 
 const corsOptions = {
   origin: [
-    "https://yadavrahul818980.github.io"
+    "https://ornate-duckanoo-8bcb1e.netlify.app"
   ],
   credentials: true,
   optionsSuccessStatus: 200,

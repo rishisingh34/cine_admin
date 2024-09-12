@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cors_1 = __importDefault(require("cors"));
 const corsOptions = {
     origin: [
-        "https://yadavrahul818980.github.io"
+        "https://ornate-duckanoo-8bcb1e.netlify.app"
     ],
     credentials: true,
     optionsSuccessStatus: 200,
