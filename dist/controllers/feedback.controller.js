@@ -89,7 +89,7 @@ const feedbackController = {
     }),
     searchFeedbacks: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const students = yield student_model_1.default.find({ name: { $regex: req.query.name || "" }, studentNumber: { $regex: req.query.studentNumber || "" } });
+            const students = yield student_model_1.default.find({ name: { $regex: req.query.name || "", $options: 'i' }, studentNumber: { $regex: req.query.studentNumber || "" } });
             const feedbacks = yield feedbackResponse_model_1.default.find({ student: { $in: students.map(student => student._id) } });
             return res.status(200).json(feedbacks);
         }

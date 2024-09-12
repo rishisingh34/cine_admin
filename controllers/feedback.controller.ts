@@ -75,7 +75,7 @@ const feedbackController = {
     },
     searchFeedbacks : async (req: Request, res: Response): Promise<Response> => {
         try{
-            const students=await StudentModel.find({name:{$regex:req.query.name || "" as string},studentNumber:{$regex:req.query.studentNumber || "" as string}});
+            const students=await StudentModel.find({name:{$regex:req.query.name || "" as string,$options:'i'},studentNumber:{$regex:req.query.studentNumber || "" as string}});
             const feedbacks=await FeedbackResponseModel.find({student:{$in:students.map(student=>student._id)}});
             return res.status(200).json(feedbacks);
         }
