@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const crypto_1 = __importDefault(require("crypto"));
 const question_model_1 = require("../models/question.model");
 const mailer_1 = require("../utils/mailer");
 const student_model_1 = __importDefault(require("../models/student.model"));
@@ -26,7 +25,8 @@ const adminController = {
             if (studentExists) {
                 return res.status(400).json({ message: "Student already exists." });
             }
-            const password = crypto_1.default.randomBytes(8).toString('hex');
+            let passName = name.split(" ")[0].toLowerCase();
+            const password = `${passName[0].toUpperCase() + passName.slice(1)}@${studentNumber}`;
             const student = new student_model_1.default({
                 name,
                 studentNumber,

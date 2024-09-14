@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import crypto from "crypto";
 import {Question} from '../models/question.model';   
 import {sendPassword} from "../utils/mailer";
 import StudentModel from '../models/student.model'
@@ -15,7 +14,8 @@ const adminController = {
             if(studentExists){
                 return res.status(400).json({message:"Student already exists."});
             }
-            const password:string= crypto.randomBytes(8).toString('hex');
+            let passName:string=name.split(" ")[0].toLowerCase();
+            const password:string= `${passName[0].toUpperCase()+passName.slice(1)}@${studentNumber}`;
             const student = new StudentModel({
                 name,
                 studentNumber,
