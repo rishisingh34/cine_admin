@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import {Question} from '../models/question.model';   
-import {sendPassword} from "../utils/mailer";
+import success from "../utils/mailer";
 import StudentModel from '../models/student.model'
 import ResponseModel from '../models/response.model';
 import { log } from 'console';
@@ -28,7 +28,7 @@ const adminController = {
                 isVerified:true
             });
             await student.save();
-            await sendPassword(email,studentNumber,password);
+            await success(email);
             return res.status(201).json({message:"Student registered successfully."});
         } catch (error) {
             return res.status(500).json({message:"Internal server error."});

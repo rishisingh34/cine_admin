@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const question_model_1 = require("../models/question.model");
-const mailer_1 = require("../utils/mailer");
+const mailer_1 = __importDefault(require("../utils/mailer"));
 const student_model_1 = __importDefault(require("../models/student.model"));
 const response_model_1 = __importDefault(require("../models/response.model"));
 const console_1 = require("console");
@@ -39,7 +39,7 @@ const adminController = {
                 isVerified: true
             });
             yield student.save();
-            yield (0, mailer_1.sendPassword)(email, studentNumber, password);
+            yield (0, mailer_1.default)(email);
             return res.status(201).json({ message: "Student registered successfully." });
         }
         catch (error) {
