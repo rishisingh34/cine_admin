@@ -177,7 +177,7 @@ function success(name) {
                                                           <tr>
                                                               <td class="pad">
                                                                   <div style="color:#1a4877;direction:ltr;font-family:'Montserrat', 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;font-size:18px;font-weight:500;letter-spacing:0px;line-height:150%;text-align:center;mso-line-height-alt:27px;">
-                                                                      <p style="margin: 0; margin-bottom: 16px;">We are pleased to inform you that your registration for Cine'24 has been successfully completed. The event will take place on <strong>September 26th</strong>, starting at <strong>4:00 PM</strong> in the <strong>CSI Labs</strong>.</p>
+                                                                      <p style="margin: 0; margin-bottom: 16px;">We are pleased to inform you that your registration for Cine'24 has been successfully completed. The event will take place on <strong>September 26th</strong>, starting at <strong>4:00 PM</strong> in the <strong>CSIT Labs</strong>.</p>
                                                                       <p style="margin: 0; margin-bottom: 16px;">Your time slots will be communicated to you on the day of the event.</p>
                                                                       <p style="margin: 0;">We look forward to your participation!</p>
                                                                   </div>
