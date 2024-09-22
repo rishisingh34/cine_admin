@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const admin_controllers_1 = __importDefault(require("../controllers/admin.controllers"));
 const router = (0, express_1.Router)();
+router.post('/login', admin_controllers_1.default.login);
 router.post('/addStudent', admin_controllers_1.default.addStudent);
 router.patch('/updateQuestion', admin_controllers_1.default.updateQuestion);
 router.delete('/deleteQuestion', admin_controllers_1.default.deleteQuestion);

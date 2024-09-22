@@ -5,8 +5,21 @@ import StudentModel from '../models/student.model'
 import ResponseModel from '../models/response.model';
 import { log } from 'console';
 import { json } from 'stream/consumers';
+import { ADMIN_ID, ADMIN_PASS } from '../config/env.config';
 
 const adminController = {
+    login: async(req:Request,res:Response):Promise<Response>=>{
+        try{
+            const {adminid,password}=req.body;
+            if(adminid!=ADMIN_ID || password!=ADMIN_PASS){
+                return res.status(400).json({message:"invalid credentials."});
+            }
+            return res.status(200).json({message:"Logged in successfully."});
+        }
+        catch(err){
+            return res.status(500).json({message:"Internal server error."});
+        }
+    },
     addStudent: async(req:Request,res:Response):Promise<Response>=>{
         try {
             const {name,studentNumber,branch,gender,residency,email,phone} = req.body;

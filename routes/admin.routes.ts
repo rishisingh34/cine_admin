@@ -2,6 +2,7 @@ import { Router } from "express";
 import adminController from "../controllers/admin.controllers";
 const router = Router();
 
+router.post('/login', adminController.login);
 router.post('/addStudent',  adminController.addStudent);
 router.patch('/updateQuestion', adminController.updateQuestion);
 router.delete('/deleteQuestion', adminController.deleteQuestion);

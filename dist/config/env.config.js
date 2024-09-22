@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ADMIN_PASS = exports.PASS = exports.EMAIL = exports.ACCESS_TOKEN_SECRET = exports.DBURI = exports.PORT = void 0;
+exports.ADMIN_ID = exports.ADMIN_PASS = exports.PASS = exports.EMAIL = exports.ACCESS_TOKEN_SECRET = exports.DBURI = exports.PORT = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || '3000';
@@ -18,3 +18,5 @@ const PASS = process.env.PASS;
 exports.PASS = PASS;
 const ADMIN_PASS = process.env.ADMIN_PASS;
 exports.ADMIN_PASS = ADMIN_PASS;
+const ADMIN_ID = process.env.ADMIN_ID;
+exports.ADMIN_ID = ADMIN_ID;

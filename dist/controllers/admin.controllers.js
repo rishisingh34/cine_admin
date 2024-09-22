@@ -17,7 +17,20 @@ const mailer_1 = __importDefault(require("../utils/mailer"));
 const student_model_1 = __importDefault(require("../models/student.model"));
 const response_model_1 = __importDefault(require("../models/response.model"));
 const console_1 = require("console");
+const env_config_1 = require("../config/env.config");
 const adminController = {
+    login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const { adminid, password } = req.body;
+            if (adminid != env_config_1.ADMIN_ID || password != env_config_1.ADMIN_PASS) {
+                return res.status(400).json({ message: "invalid credentials." });
+            }
+            return res.status(200).json({ message: "Logged in successfully." });
+        }
+        catch (err) {
+            return res.status(500).json({ message: "Internal server error." });
+        }
+    }),
     addStudent: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { name, studentNumber, branch, gender, residency, email, phone } = req.body;
