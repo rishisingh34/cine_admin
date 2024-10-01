@@ -136,7 +136,7 @@ These routes are for administrative functionalities like adding students and man
 
 4. Run the project:
    ```bash
-   npm start
+   nodemon app.ts
    ```
 
 ---
